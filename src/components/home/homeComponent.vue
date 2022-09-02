@@ -1,128 +1,152 @@
 <template>
   <div class="card">
-    <div class="flex flex-row flex-wrap card-container" id="tipoclass">
-      <div class="flex align-items-center justify-content-center">
-        <div class="formatacaoGeral">
-          <h4>País de origem</h4>
-          <Dropdown
-            v-model="paisOrigem"
-            :options="countriesList"
-            optionLabel="country"
-            placeholder="Selecione o País"
-            @change="getCidadesOrigem(paisOrigem)"
-          />
-        </div>
+    <div class="flex flex-column card-container">
+      <div class="card">
+        <!-- <div class="flex flex-row flex-wrap card-container" id="tipoclass"> -->
+        <div
+          class="flex align-items-center justify-content-center"
+          id="tipoclass"
+        >
+          <div class="flex align-items-center justify-content-center">
+            <div class="formatacaoGeral">
+              <h4>País de origem</h4>
+              <Dropdown
+                v-model="paisOrigem"
+                :options="countriesList"
+                optionLabel="country"
+                placeholder="Selecione o País"
+                @change="getCidadesOrigem(paisOrigem)"
+                class="p-dropdown"
+              />
+            </div>
 
-        <div class="formatacaoGeral">
-          <h4>Cidade de Origem</h4>
-          <Dropdown
-            id="cityOrigin"
-            v-model="cidadeOrigem"
-            :options="listCidadeOrigem"
-            optionLabel="city"
-            placeholder="Selecione a cidade"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="flex flex-row flex-wrap card-container" id="tipoclass">
-      <div class="flex align-items-center justify-content-center">
-        <div class="formatacaoGeral">
-          <h4>País de Destino</h4>
-          <Dropdown
-            v-model="paisDestino"
-            :options="countriesList"
-            optionLabel="country"
-            placeholder="Selecione o País"
-            @change="getCidadeDestino(paisDestino)"
-          />
-        </div>
-
-        <div class="formatacaoGeral">
-          <h4>Cidade de destino</h4>
-          <Dropdown
-            v-model="cidadeDestino"
-            :options="listCidadeDestino"
-            optionLabel="city"
-            placeholder="Selecione a cidade"
-          />
+            <div class="formatacaoGeral">
+              <h4>Cidade de Origem</h4>
+              <Dropdown
+                id="cityOrigin"
+                v-model="cidadeOrigem"
+                :options="listCidadeOrigem"
+                optionLabel="city"
+                placeholder="Selecione a cidade"
+                class="p-dropdown"
+              />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div>
-    <div class="card">
-      <div class="flex flex-row flex-wrap card-container">
+      <div class="card">
+        <div
+          class="flex align-items-center justify-content-center"
+          id="tipoclass"
+        >
+          <div class="flex align-items-center justify-content-center">
+            <div class="formatacaoGeral">
+              <h4>País de Destino</h4>
+              <Dropdown
+                v-model="paisDestino"
+                :options="countriesList"
+                optionLabel="country"
+                placeholder="Selecione o País"
+                @change="getCidadeDestino(paisDestino)"
+                class="p-dropdown"
+              />
+            </div>
+
+            <div class="formatacaoGeral">
+              <h4>Cidade de destino</h4>
+              <Dropdown
+                v-model="cidadeDestino"
+                :options="listCidadeDestino"
+                optionLabel="city"
+                placeholder="Selecione a cidade"
+                class="p-dropdown"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <div class="flex align-items-center justify-content-center">
+            <div class="flex align-items-center justify-content-center">
+              <div id="adultos">
+                <h4>Adultos</h4>
+                <Button label="+" @click="addAdulto" />
+                <span> {{ countAdultos }} </span>
+                <Button label="-" @click="removerAdulto" />
+              </div>
+
+              <div id="criancas">
+                <h4>Crianças</h4>
+                <Button label="+" @click="addCrianca" />
+                <span> {{ countCrianca }} </span>
+                <Button label="-" @click="removerCrianca" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div
+          class="flex align-items-center justify-content-center"
+          id="tipoclass"
+        >
+          <div class="flex align-items-center justify-content-center">
+            <div class="field-radiobutton">
+              <div id="radion">
+                <RadioButton
+                  inputId="economica"
+                  name="economica"
+                  value="economica"
+                  v-model="tipoClass"
+                />
+                <label for="economica">Economica</label>
+              </div>
+            </div>
+          </div>
+          <div class="flex align-items-center justify-content-center">
+            <div class="field-radiobutton">
+              <div id="radion">
+                <RadioButton
+                  inputId="executiva"
+                  name="executiva"
+                  value="executiva"
+                  v-model="tipoClass"
+                />
+                <label for="executiva">Executiva</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex flex-column card-container green-container">
+          <div class="flex align-items-center justify-content-center">
+            <h5>Utilizar : {{ countMilhas }} Milhas</h5>
+          </div>
+          <div class="flex align-items-center justify-content-center milhas">
+            <InputNumber
+              inputId="withoutgrouping"
+              v-model="countMilhas"
+              mode="decimal"
+              :useGrouping="false"
+            />
+          </div>
+          <div class="flex align-items-center justify-content-center milhas">
+            <Slider id="milhas" v-model="countMilhas" :max="100000" />
+          </div>
+        </div>
+      </div>
+      <div class="card">
         <div class="flex align-items-center justify-content-center">
-          <div id="adultos">
-            <h4>Adultos</h4>
-            <Button label="+" @click="addAdulto" />
-            <span> {{ countAdultos }} </span>
-            <Button label="-" @click="removerAdulto" />
-          </div>
-
-          <div id="criancas">
-            <h4>Crianças</h4>
-            <Button label="+" @click="addCrianca" />
-            <span> {{ countCrianca }} </span>
-            <Button label="-" @click="removerCrianca" />
-          </div>
+          <Button type="submit" @click="calcular()">Calcular</Button>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="card">
-    <div class="flex flex-row flex-wrap card-container" id="tipoclass">
-      <div class="flex align-items-center justify-content-center">
-        <div class="field-radiobutton">
-          <div id="radion">
-            <RadioButton
-              inputId="economica"
-              name="economica"
-              value="economica"
-              v-model="tipoClass"
-            />
-            <label for="economica">Economica</label>
-          </div>
-        </div>
-      </div>
-      <div class="flex align-items-center justify-content-center">
-        <div class="field-radiobutton">
-          <div id="radion">
-            <RadioButton
-              inputId="executiva"
-              name="executiva"
-              value="executiva"
-              v-model="tipoClass"
-            />
-            <label for="executiva">Executiva</label>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <h5>Utilizar : {{ countMilhas }} Milhas</h5>
-    <InputNumber
-      inputId="withoutgrouping"
-      v-model="countMilhas"
-      mode="decimal"
-      :useGrouping="false"
-    />
-    <Slider id="milhas" v-model="countMilhas" :max="100000" />
-  </div>
-
-  <br />
-  <br />
-  <br />
-  <div>
-    <Button type="submit" @click="calcular()">Calcular</Button>
   </div>
 </template>
 
@@ -196,7 +220,6 @@ export default {
   },
 
   methods: {
- 
     async calcular() {
       this.baseCalculos = {
         latitudeOrigem: this.cidadeOrigem.latitude,
@@ -223,7 +246,6 @@ export default {
     getCidadeDestino(indexCidade) {
       this.listCidadeDestino = indexCidade.cities;
     },
-
   },
 };
 </script>
@@ -258,5 +280,18 @@ span {
 
 #radion RadioButton {
   margin-right: 10px;
+}
+
+.milhas {
+  margin-bottom: 10px;
+}
+
+.p-dropdown {
+  width: 12rem;
+}
+
+.p-slider-horizontal,
+.p-inputtext {
+  width: 14rem;
 }
 </style>
