@@ -145,6 +145,37 @@
         <div class="flex align-items-center justify-content-center">
           <Button type="submit" @click="calcular()">Calcular</Button>
         </div>
+        <div class="flex align-items-center justify-content-center">
+          <Button label="Show" icon="pi pi-external-link" @click="openModal" />
+          <Dialog
+            header="Resumo da viagem"
+            v-model:visible="displayModal"
+            :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+            :style="{ width: '50vw' }"
+            :modal="true"
+          >
+            <p class="m-0">Origem {{ this.resumoPassagem.origem }}</p>
+            <p class="m-0">Destino {{ this.resumoPassagem.destino }}</p>
+            <p class="m-0">Distância {{ this.resumoPassagem.distancia }}</p>
+            <p class="m-0">Total Adultos {{ this.resumoPassagem.adultos }}</p>
+            <p class="m-0">Total Crianças {{ this.resumoPassagem.criancas }}</p>
+            <p class="m-0">Tipo Voo {{ this.resumoPassagem.tipoVoo }}</p>
+            <p class="m-0">Valor passagem Adulto R$ {{ this.resumoPassagem.valorPorAdulto }}</p>
+            <p class="m-0">Valor passagem Criança R$ {{ this.resumoPassagem.valorPorCrianca }}</p>
+            <p class="m-0">Milhas {{ this.resumoPassagem.descontoMilhas }}</p>
+            <p class="m-0">Desconto Milhas R$ {{ this.resumoPassagem.descontoMilhas }}</p>
+            <p class="m-0">Total Passagem R$ {{ this.resumoPassagem.totalPassagem }}</p>
+            
+            <template #footer>
+              <Button
+                label="Yes"
+                icon="pi pi-check"
+                @click="closeModal"
+                autofocus
+              />
+            </template>
+          </Dialog>
+        </div>
       </div>
     </div>
   </div>
@@ -216,10 +247,19 @@ export default {
       listCidadeOrigem: [],
       listCidadeDestino: [],
       baseCalculos: {},
+      resumoPassagem: {},
+      displayModal: false,
     };
   },
 
   methods: {
+    openModal() {
+      this.displayModal = true;
+    },
+    closeModal() {
+      this.displayModal = false;
+    },
+
     async calcular() {
       this.baseCalculos = {
         latitudeOrigem: this.cidadeOrigem.latitude,
@@ -234,9 +274,9 @@ export default {
         totalMilhas: this.countMilhas,
       };
 
-      let result = await calcularPassagens(this.baseCalculos);
+      this.resumoPassagem = await calcularPassagens(this.baseCalculos);
 
-      console.log(`retorno do calcularPassagens: ${JSON.stringify(result)}`);
+      console.log(`retorno do calcularPassagens: ${JSON.stringify(this.resumoPassagem)}`);
     },
 
     getCidadesOrigem(indexCidade) {

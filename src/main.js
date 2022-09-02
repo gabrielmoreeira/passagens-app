@@ -7,6 +7,7 @@ import Button from "primevue/button";
 import RadioButton from "primevue/radiobutton";
 import Slider from "primevue/slider";
 import InputNumber from "primevue/inputnumber";
+import Dialog from "primevue/dialog";
 
 import "primeflex/primeflex.css";
 
@@ -21,5 +22,6 @@ app.component("Button", Button);
 app.component("RadioButton", RadioButton);
 app.component("Slider", Slider);
 app.component("InputNumber", InputNumber);
+app.component("Dialog", Dialog);
 
 app.mount("#app");
