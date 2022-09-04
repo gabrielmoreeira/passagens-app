@@ -87,26 +87,27 @@ const calcularPassagens = async (baseCalculos) => {
       valorPassagemCrianca = valorPassagemCrianca * 1.4;
     }
 
-    if (baseCalculos.milhas > 0) {
-      valorDesconto = milhas * 0.02;
-      totalPassagem =
-        valorPassagemAdulto + valorPassagemCrianca - valorDesconto;
+    if (baseCalculos.totalMilhas > 0) {
+      valorDesconto = baseCalculos.totalMilhas * 0.02;
+      totalPassagem = valorPassagemAdulto + valorPassagemCrianca - valorDesconto;
     } else {
       totalPassagem = valorPassagemAdulto + valorPassagemCrianca;
     }
 
     let teste = {
+      cidadeOrigem: baseCalculos.cidadeOrigem,
       origem: baseCalculos.paisOrigem,
+      cidadeDestino: baseCalculos.cidadeDestino,
       destino: baseCalculos.paisDestino,
-      distancia: distancia,
+      distancia: await formatFloat(false, distancia),
       adultos: baseCalculos.totalAdultos,
       criancas: baseCalculos.totalCriancas,
       tipoVoo: baseCalculos.tipoClass,
-      valorPorAdulto: valorPassagemAdulto,
-      valorPorCrianca: valorPassagemCrianca,
-      milhas: baseCalculos.milhas,
-      descontoMilhas: valorDesconto,
-      totalPassagem: totalPassagem,
+      valorPorAdulto: await formatFloat(true,valorPassagemAdulto),
+      valorPorCrianca: await formatFloat(true,valorPassagemCrianca),
+      milhas: baseCalculos.totalMilhas,
+      descontoMilhas: await formatFloat(true,valorDesconto),
+      totalPassagem: await formatFloat(true,totalPassagem),
     };
 
     return teste;
@@ -114,5 +115,13 @@ const calcularPassagens = async (baseCalculos) => {
     console.log(`Falha ao realizar calculo Passagem ${error}`);
   }
 };
+
+async function formatFloat(monetario, number) {
+  if (monetario) {
+    return new Intl.NumberFormat('pt-BR', {style:"currency", currency: "BRL"}).format(number);
+  } else  {
+    return new Intl.NumberFormat('pt-BR', {currency: "BRL"}).format(number);
+  }
+}
 
 export { calcularPassagens };

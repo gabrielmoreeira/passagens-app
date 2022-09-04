@@ -101,20 +101,20 @@
         <div class="flex align-items-center justify-content-center">
           <!-- <Button label="Show" icon="pi pi-external-link" @click="openModal" /> -->
           <Dialog header="Resumo da viagem" v-model:visible="displayModal" :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '50vw' }" :modal="true">
-            <p class="m-0">Origem {{ this.resumoPassagem.origem }}</p>
-            <p class="m-0">Destino {{ this.resumoPassagem.destino }}</p>
-            <p class="m-0">Distância {{ new Intl.NumberFormat('pt-BR', {}).format(this.resumoPassagem.distancia.toFixed(2)) }}</p>
+            <p class="m-0">Origem {{ this.resumoPassagem.origem +" ("+this.resumoPassagem.cidadeOrigem + ")" }}</p>
+            <p class="m-0">Destino {{ this.resumoPassagem.destino +" ("+this.resumoPassagem.cidadeDestino+ ")"}}</p>
+            <p class="m-0">Distância {{ this.resumoPassagem.distancia }}</p>
             <p class="m-0">Total Adultos {{ this.resumoPassagem.adultos }}</p>
             <p class="m-0">Total Crianças {{ this.resumoPassagem.criancas }}</p>
             <p class="m-0">Tipo Voo {{ this.resumoPassagem.tipoVoo }}</p>
-            <p class="m-0">Valor passagem Adulto {{ new Intl.NumberFormat('pt-BR', {style:"currency", currency: "BRL"}).format(this.resumoPassagem.valorPorAdulto) }}</p>
-            <p class="m-0">Valor passagem Criança {{ new Intl.NumberFormat('pt-BR', {style:"currency", currency: "BRL"}).format(this.resumoPassagem.valorPorCrianca) }}</p>
-            <p class="m-0">Milhas {{ this.resumoPassagem.descontoMilhas }}</p>
-            <p class="m-0">Desconto Milhas {{ new Intl.NumberFormat('pt-BR', {style:"currency", currency: "BRL"}).format(this.resumoPassagem.descontoMilhas) }}</p>
-            <p class="m-0">Total Passagem {{new Intl.NumberFormat('pt-BR', {style:"currency", currency: "BRL"}).format(this.resumoPassagem.totalPassagem) }}</p>
+            <p class="m-0">Valor passagem Adulto {{ this.resumoPassagem.valorPorAdulto }}</p>
+            <p class="m-0">Valor passagem Criança {{ this.resumoPassagem.valorPorCrianca }}</p>
+            <p class="m-0">Milhas {{ this.resumoPassagem.milhas }}</p>
+            <p class="m-0">Desconto Milhas {{ this.resumoPassagem.descontoMilhas }}</p>
+            <p class="m-0">Total Passagem {{ this.resumoPassagem.totalPassagem }}</p>
 
             <template #footer>
-              <Button label="Yes" icon="pi pi-check" @click="closeModal" autofocus />
+              <Button label="Fechar" icon="pi pi-check" @click="closeModal" autofocus />
             </template>
           </Dialog>
         </div>
@@ -204,8 +204,10 @@ export default {
 
     async calcular() {
       this.baseCalculos = {
+        cidadeOrigem: this.cidadeOrigem.city,
         latitudeOrigem: this.cidadeOrigem.latitude,
         longitudeOrigem: this.cidadeOrigem.longitude,
+        cidadeDestino: this.cidadeDestino.city,
         latitudeDestino: this.cidadeDestino.latitude,
         longitudeDestino: this.cidadeDestino.longitude,
         paisOrigem: this.paisOrigem.country,
@@ -218,8 +220,8 @@ export default {
 
       this.resumoPassagem = await calcularPassagens(this.baseCalculos);
       this.displayModal = true;
-
       console.log(`retorno do calcularPassagens: ${JSON.stringify(this.resumoPassagem)}`);
+
     },
 
     getCidadesOrigem(indexCidade) {
