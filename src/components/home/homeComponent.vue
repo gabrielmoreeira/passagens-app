@@ -3,65 +3,36 @@
     <div class="flex flex-column card-container">
       <div class="card">
         <!-- <div class="flex flex-row flex-wrap card-container" id="tipoclass"> -->
-        <div
-          class="flex align-items-center justify-content-center"
-          id="tipoclass"
-        >
+        <div class="flex align-items-center justify-content-center" id="tipoclass">
           <div class="flex align-items-center justify-content-center">
             <div class="formatacaoGeral">
               <h4>País de origem</h4>
-              <Dropdown
-                v-model="paisOrigem"
-                :options="countriesList"
-                optionLabel="country"
-                placeholder="Selecione o País"
-                @change="getCidadesOrigem(paisOrigem)"
-                class="p-dropdown"
-              />
+              <Dropdown v-model="paisOrigem" :options="countriesList" optionLabel="country"
+                placeholder="Selecione o País" @change="getCidadesOrigem(paisOrigem)" class="p-dropdown" />
             </div>
 
             <div class="formatacaoGeral">
               <h4>Cidade de Origem</h4>
-              <Dropdown
-                id="cityOrigin"
-                v-model="cidadeOrigem"
-                :options="listCidadeOrigem"
-                optionLabel="city"
-                placeholder="Selecione a cidade"
-                class="p-dropdown"
-              />
+              <Dropdown id="cityOrigin" v-model="cidadeOrigem" :options="listCidadeOrigem" optionLabel="city"
+                placeholder="Selecione a cidade" class="p-dropdown" />
             </div>
           </div>
         </div>
       </div>
 
       <div class="card">
-        <div
-          class="flex align-items-center justify-content-center"
-          id="tipoclass"
-        >
+        <div class="flex align-items-center justify-content-center" id="tipoclass">
           <div class="flex align-items-center justify-content-center">
             <div class="formatacaoGeral">
               <h4>País de Destino</h4>
-              <Dropdown
-                v-model="paisDestino"
-                :options="countriesList"
-                optionLabel="country"
-                placeholder="Selecione o País"
-                @change="getCidadeDestino(paisDestino)"
-                class="p-dropdown"
-              />
+              <Dropdown v-model="paisDestino" :options="countriesList" optionLabel="country"
+                placeholder="Selecione o País" @change="getCidadeDestino(paisDestino)" class="p-dropdown" />
             </div>
 
             <div class="formatacaoGeral">
               <h4>Cidade de destino</h4>
-              <Dropdown
-                v-model="cidadeDestino"
-                :options="listCidadeDestino"
-                optionLabel="city"
-                placeholder="Selecione a cidade"
-                class="p-dropdown"
-              />
+              <Dropdown v-model="cidadeDestino" :options="listCidadeDestino" optionLabel="city"
+                placeholder="Selecione a cidade" class="p-dropdown" />
             </div>
           </div>
         </div>
@@ -90,19 +61,11 @@
       </div>
 
       <div class="card">
-        <div
-          class="flex align-items-center justify-content-center"
-          id="tipoclass"
-        >
+        <div class="flex align-items-center justify-content-center" id="tipoclass">
           <div class="flex align-items-center justify-content-center">
             <div class="field-radiobutton">
               <div id="radion">
-                <RadioButton
-                  inputId="economica"
-                  name="economica"
-                  value="economica"
-                  v-model="tipoClass"
-                />
+                <RadioButton inputId="economica" name="economica" value="economica" v-model="tipoClass" />
                 <label for="economica">Economica</label>
               </div>
             </div>
@@ -110,12 +73,7 @@
           <div class="flex align-items-center justify-content-center">
             <div class="field-radiobutton">
               <div id="radion">
-                <RadioButton
-                  inputId="executiva"
-                  name="executiva"
-                  value="executiva"
-                  v-model="tipoClass"
-                />
+                <RadioButton inputId="executiva" name="executiva" value="executiva" v-model="tipoClass" />
                 <label for="executiva">Executiva</label>
               </div>
             </div>
@@ -129,12 +87,7 @@
             <h5>Utilizar : {{ countMilhas }} Milhas</h5>
           </div>
           <div class="flex align-items-center justify-content-center milhas">
-            <InputNumber
-              inputId="withoutgrouping"
-              v-model="countMilhas"
-              mode="decimal"
-              :useGrouping="false"
-            />
+            <InputNumber inputId="withoutgrouping" v-model="countMilhas" mode="decimal" :useGrouping="false" />
           </div>
           <div class="flex align-items-center justify-content-center milhas">
             <Slider id="milhas" v-model="countMilhas" :max="100000" />
@@ -146,33 +99,22 @@
           <Button type="submit" @click="calcular()">Calcular</Button>
         </div>
         <div class="flex align-items-center justify-content-center">
-          <Button label="Show" icon="pi pi-external-link" @click="openModal" />
-          <Dialog
-            header="Resumo da viagem"
-            v-model:visible="displayModal"
-            :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-            :style="{ width: '50vw' }"
-            :modal="true"
-          >
+          <!-- <Button label="Show" icon="pi pi-external-link" @click="openModal" /> -->
+          <Dialog header="Resumo da viagem" v-model:visible="displayModal" :breakpoints="{ '960px': '75vw', '640px': '90vw' }" :style="{ width: '50vw' }" :modal="true">
             <p class="m-0">Origem {{ this.resumoPassagem.origem }}</p>
             <p class="m-0">Destino {{ this.resumoPassagem.destino }}</p>
-            <p class="m-0">Distância {{ this.resumoPassagem.distancia }}</p>
+            <p class="m-0">Distância {{ new Intl.NumberFormat('pt-BR', {}).format(this.resumoPassagem.distancia.toFixed(2)) }}</p>
             <p class="m-0">Total Adultos {{ this.resumoPassagem.adultos }}</p>
             <p class="m-0">Total Crianças {{ this.resumoPassagem.criancas }}</p>
             <p class="m-0">Tipo Voo {{ this.resumoPassagem.tipoVoo }}</p>
-            <p class="m-0">Valor passagem Adulto R$ {{ this.resumoPassagem.valorPorAdulto }}</p>
-            <p class="m-0">Valor passagem Criança R$ {{ this.resumoPassagem.valorPorCrianca }}</p>
+            <p class="m-0">Valor passagem Adulto {{ new Intl.NumberFormat('pt-BR', {style:"currency", currency: "BRL"}).format(this.resumoPassagem.valorPorAdulto) }}</p>
+            <p class="m-0">Valor passagem Criança {{ new Intl.NumberFormat('pt-BR', {style:"currency", currency: "BRL"}).format(this.resumoPassagem.valorPorCrianca) }}</p>
             <p class="m-0">Milhas {{ this.resumoPassagem.descontoMilhas }}</p>
-            <p class="m-0">Desconto Milhas R$ {{ this.resumoPassagem.descontoMilhas }}</p>
-            <p class="m-0">Total Passagem R$ {{ this.resumoPassagem.totalPassagem }}</p>
-            
+            <p class="m-0">Desconto Milhas {{ new Intl.NumberFormat('pt-BR', {style:"currency", currency: "BRL"}).format(this.resumoPassagem.descontoMilhas) }}</p>
+            <p class="m-0">Total Passagem {{new Intl.NumberFormat('pt-BR', {style:"currency", currency: "BRL"}).format(this.resumoPassagem.totalPassagem) }}</p>
+
             <template #footer>
-              <Button
-                label="Yes"
-                icon="pi pi-check"
-                @click="closeModal"
-                autofocus
-              />
+              <Button label="Yes" icon="pi pi-check" @click="closeModal" autofocus />
             </template>
           </Dialog>
         </div>
@@ -275,6 +217,7 @@ export default {
       };
 
       this.resumoPassagem = await calcularPassagens(this.baseCalculos);
+      this.displayModal = true;
 
       console.log(`retorno do calcularPassagens: ${JSON.stringify(this.resumoPassagem)}`);
     },
@@ -309,6 +252,7 @@ span {
   margin-top: 10px;
   margin-right: 10px;
 }
+
 .formatacaoGeral {
   margin-right: 10px;
 }
